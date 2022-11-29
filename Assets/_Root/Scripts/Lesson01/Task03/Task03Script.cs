@@ -32,19 +32,19 @@ namespace CourseSystemProgram.Lesson01.Task03
         {
             FreeCancellationTokenSource();
             _cancelTokenSource = new CancellationTokenSource();
-            Task task1 = Task.Run(() => Task01Example(_cancelTokenSource.Token));
-            Task task2 = Task.Run(() => Task02Example(_cancelTokenSource.Token, 60));
+            Task task1 = Task01Example(_cancelTokenSource.Token);
+            Task task2 = Task02Example(_cancelTokenSource.Token, 60);
 
-            bool result = await WhatTaskFasterAsync(_cancelTokenSource.Token, task1, task2);
+            bool result = await WhatTaskFasterAsync(_cancelTokenSource, task1, task2);
             Debug.Log(result);
         }
 
-        private async void Task01Example(CancellationToken cancellationToken)
+        private async Task Task01Example(CancellationToken cancellationToken)
         {
             await Task.Delay(1000, cancellationToken);
         }
 
-        private async void Task02Example(CancellationToken cancellationToken, int frameCount)
+        private async Task Task02Example(CancellationToken cancellationToken, int frameCount)
         {
             for (int i = 0; i < frameCount; i++)
             {
@@ -56,16 +56,16 @@ namespace CourseSystemProgram.Lesson01.Task03
             }
         }
 
-        public async Task<bool> WhatTaskFasterAsync(CancellationToken ct, Task task1, Task task2)
+        public static async Task<bool> WhatTaskFasterAsync(CancellationTokenSource cts, Task task1, Task task2)
         {
             var taskResult = await Task.WhenAny(task1, task2);
-            if (ct.IsCancellationRequested)
+            if (cts.Token.IsCancellationRequested)
             {
                 Debug.Log("Cancel requested.");
                 return false;
             }
 
-            _cancelTokenSource.Cancel();
+            cts.Cancel();
 
             if (taskResult == task1)
             {
