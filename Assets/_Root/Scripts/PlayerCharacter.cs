@@ -44,9 +44,9 @@ public class PlayerCharacter : Character
         }
         else
         {
-            Debug.Log(serverPosition);
-            transform.position = Vector3.SmoothDamp(transform.position,
-            serverPosition, ref currentVelocity, movingSpeed * Time.deltaTime);
+            //Debug.Log(serverPosition);
+            //transform.position = Vector3.SmoothDamp(transform.position,
+            //serverPosition, ref currentVelocity, movingSpeed * Time.deltaTime);
         }
     }
     private void Start()

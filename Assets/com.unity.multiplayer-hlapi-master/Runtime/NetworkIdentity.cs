@@ -5,7 +5,6 @@ using UnityEngine.Networking.NetworkSystem;
 
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace UnityEngine.Networking
@@ -159,7 +158,7 @@ namespace UnityEngine.Networking
                 return m_AssetId;
             }
         }
-        public void SetDynamicAssetId(NetworkHash128 newAssetId)
+        internal void SetDynamicAssetId(NetworkHash128 newAssetId)
         {
             if (!m_AssetId.IsValid() || m_AssetId.Equals(newAssetId))
             {
@@ -371,37 +370,12 @@ namespace UnityEngine.Networking
         void AssignAssetID(GameObject prefab)
         {
             string path = AssetDatabase.GetAssetPath(prefab);
-            if (path == "")
-            {
-                try
-                {
-                    var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
-                    if (prefabStage && prefabStage.IsPartOfPrefabContents(prefab))
-                    {
-                        path = prefabStage?.prefabAssetPath;
-                    }
-                }
-                catch (Exception e) { }
-            }
-            if (path != null && path != "")
-            {
-                m_AssetId = NetworkHash128.Parse(AssetDatabase.AssetPathToGUID(path));
-            }
+            m_AssetId = NetworkHash128.Parse(AssetDatabase.AssetPathToGUID(path));
         }
 
         bool ThisIsAPrefab()
         {
-            var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
-            bool isPartOfPrefabContents = false;
-            if (prefabStage)
-            {
-                try
-                {
-                    isPartOfPrefabContents = prefabStage.IsPartOfPrefabContents(gameObject);
-                }
-                catch (Exception e) { }
-            }
-            return PrefabUtility.IsPartOfPrefabAsset(gameObject) || isPartOfPrefabContents;
+            return PrefabUtility.IsPartOfPrefabAsset(gameObject);
         }
 
         bool ThisIsASceneObjectWithThatReferencesPrefabAsset(out GameObject prefab)
@@ -420,22 +394,19 @@ namespace UnityEngine.Networking
 
         void SetupIDs()
         {
-            if (!Application.isPlaying)
+            GameObject prefab;
+            if (ThisIsAPrefab())
             {
-                GameObject prefab;
-                if (ThisIsAPrefab())
-                {
-                    ForceSceneId(0);
-                    AssignAssetID(gameObject);
-                }
-                else if (ThisIsASceneObjectWithThatReferencesPrefabAsset(out prefab))
-                {
-                    AssignAssetID(prefab);
-                }
-                else
-                {
-                    m_AssetId.Reset();
-                }
+                ForceSceneId(0);
+                AssignAssetID(gameObject);
+            }
+            else if (ThisIsASceneObjectWithThatReferencesPrefabAsset(out prefab))
+            {
+                AssignAssetID(prefab);
+            }
+            else
+            {
+                m_AssetId.Reset();
             }
         }
 
