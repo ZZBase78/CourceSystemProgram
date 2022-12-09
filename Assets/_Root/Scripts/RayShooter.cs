@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 public class RayShooter : FireAction
 {
-    private Camera camera;
+    private Camera _camera;
     protected override void Start()
     {
         base.Start();
-        camera = GetComponentInChildren<Camera>();
+        _camera = GetComponentInChildren<Camera>();
     }
     private void Update()
     {
@@ -45,7 +45,7 @@ public class RayShooter : FireAction
         }
         var point = new Vector3(Camera.main.pixelWidth / 2,
         Camera.main.pixelHeight / 2, 0);
-        var ray = camera.ScreenPointToRay(point);
+        var ray = _camera.ScreenPointToRay(point);
         if (!Physics.Raycast(ray, out var hit))
         {
             yield break;

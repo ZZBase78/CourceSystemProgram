@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MouseLook : NetworkBehaviour
 {
-    public Camera PlayerCamera => camera;
+    public Camera PlayerCamera => _camera;
     [Range(0.1f, 10.0f)]
     [SerializeField] private float sensitivity = 2.0f;
     [Range(-90.0f, .0f)]
@@ -12,10 +12,10 @@ public class MouseLook : NetworkBehaviour
     [SerializeField] private float maxVert = 45.0f;
     private float rotationX = .0f;
     private float rotationY = .0f;
-    private Camera camera;
+    private Camera _camera;
     private void Start()
     {
-        camera = GetComponentInChildren<Camera>();
+        _camera = GetComponentInChildren<Camera>();
         var rb = GetComponentInChildren<Rigidbody>();
         if (rb != null)
             rb.freezeRotation = true;
@@ -26,6 +26,6 @@ public class MouseLook : NetworkBehaviour
         rotationY += Input.GetAxis("Mouse X") * sensitivity;
         rotationX = Mathf.Clamp(rotationX, minVert, maxVert);
         transform.rotation = Quaternion.Euler(0, rotationY, 0);
-        camera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        _camera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
     }
 }

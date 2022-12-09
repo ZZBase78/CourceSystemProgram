@@ -23,9 +23,9 @@ public class PlayerCharacter : Character
     {
         if (mouseLook != null && mouseLook.PlayerCamera != null)
         {
-            mouseLook.PlayerCamera.enabled = hasAuthority;
+            mouseLook.PlayerCamera.enabled = isOwned;
         }
-        if (hasAuthority)
+        if (isOwned)
         {
             var moveX = Input.GetAxis("Horizontal") * movingSpeed;
             var moveZ = Input.GetAxis("Vertical") * movingSpeed;
