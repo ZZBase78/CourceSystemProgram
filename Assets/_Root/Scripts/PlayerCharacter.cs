@@ -8,6 +8,7 @@ public class PlayerCharacter : Character
     private CharacterController characterController;
     private MouseLook mouseLook;
     private Vector3 currentVelocity;
+    private AudioListener _audioListener;
     protected override FireAction fireAction { get; set; }
     protected override void Initiate()
     {
@@ -18,12 +19,14 @@ public class PlayerCharacter : Character
         characterController ??= gameObject.AddComponent<CharacterController>();
         mouseLook = GetComponentInChildren<MouseLook>();
         mouseLook ??= gameObject.AddComponent<MouseLook>();
+        _audioListener = GetComponentInChildren<AudioListener>();
     }
     public override void Movement()
     {
         if (mouseLook != null && mouseLook.PlayerCamera != null)
         {
             mouseLook.PlayerCamera.enabled = isOwned;
+            _audioListener.enabled = isOwned;
         }
         if (isOwned)
         {
@@ -44,9 +47,11 @@ public class PlayerCharacter : Character
         }
         else
         {
+            //Add NetwrokTransform
+
             //Debug.Log(serverPosition);
-            transform.position = Vector3.SmoothDamp(transform.position,
-            serverPosition, ref currentVelocity, movingSpeed * Time.deltaTime);
+            //transform.position = Vector3.SmoothDamp(transform.position,
+            //serverPosition, ref currentVelocity, movingSpeed * Time.deltaTime);
         }
     }
     private void Start()
