@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-public abstract class FireAction : MonoBehaviour
+public abstract class FireAction : NetworkBehaviour
 {
     [SerializeField]
     private GameObject bulletPrefab;

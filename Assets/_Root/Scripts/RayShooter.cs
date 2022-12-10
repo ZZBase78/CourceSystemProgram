@@ -1,7 +1,9 @@
+using Mirror;
 using System.Collections;
 using UnityEngine;
 public class RayShooter : FireAction
 {
+    [SyncVar] public int health = 100;
     private Camera _camera;
     protected override void Start()
     {
@@ -10,6 +12,7 @@ public class RayShooter : FireAction
     }
     private void Update()
     {
+        if (!isOwned) return;
         if (Input.GetMouseButtonDown(0))
         {
             Shooting();
@@ -34,29 +37,51 @@ public class RayShooter : FireAction
         base.Shooting();
         if (bullets.Count > 0)
         {
-            StartCoroutine(Shoot());
+            if (!reloading)
+            {
+                Shoot();
+            }
         }
     }
-    private IEnumerator Shoot()
+    private void Shoot()
     {
-        if (reloading)
-        {
-            yield break;
-        }
-        var point = new Vector3(Camera.main.pixelWidth / 2,
-        Camera.main.pixelHeight / 2, 0);
-        var ray = _camera.ScreenPointToRay(point);
-        if (!Physics.Raycast(ray, out var hit))
-        {
-            yield break;
-        }
         var shoot = bullets.Dequeue();
         BulletCount = bullets.Count.ToString();
         ammunition.Enqueue(shoot);
-        shoot.SetActive(true);
-        shoot.transform.position = hit.point;
-        shoot.transform.parent = hit.transform;
-        yield return new WaitForSeconds(2.0f);
-        shoot.SetActive(false);
+
+        CmdCallRayCalc();
+
+        //shoot.SetActive(true);
+        //shoot.transform.position = hit.point;
+        //shoot.transform.parent = hit.transform;
+        //yield return new WaitForSeconds(2.0f);
+        //shoot.SetActive(false);
     }
+
+    [Command]
+    private void CmdCallRayCalc()
+    {
+        RayCalc();
+    }
+
+    [Server]
+    private void RayCalc()
+    {
+        var point = new Vector3(_camera.pixelWidth / 2,
+        _camera.pixelHeight / 2, 0);
+        var ray = _camera.ScreenPointToRay(point);
+        if (!Physics.Raycast(ray, out var hit)) return;
+        PlayerCharacter playerCharacter = hit.collider.GetComponentInParent<PlayerCharacter>();
+        if (playerCharacter != null)
+        {
+            //Debug.Log("Server health -");
+            playerCharacter.health -= 10;
+            if (playerCharacter.health <= 0)
+            {
+                playerCharacter.connectionToClient.Disconnect();
+            }
+        }
+        
+    }
+
 }

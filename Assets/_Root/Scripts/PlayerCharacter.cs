@@ -1,7 +1,8 @@
+using Mirror;
 using UnityEngine;
 public class PlayerCharacter : Character
 {
-    [Range(0, 100)][SerializeField] private int health = 100;
+    [Range(0, 100)][SerializeField][SyncVar] public int health = 100;
     [Range(0.5f, 10.0f)][SerializeField] private float movingSpeed = 8.0f;
     [SerializeField] private float acceleration = 3.0f;
     private const float gravity = -9.8f;
@@ -13,7 +14,7 @@ public class PlayerCharacter : Character
     protected override void Initiate()
     {
         base.Initiate();
-        fireAction = gameObject.AddComponent<RayShooter>();
+        fireAction = gameObject.GetComponent<RayShooter>();
         fireAction.Reloading();
         characterController = GetComponentInChildren<CharacterController>();
         characterController ??= gameObject.AddComponent<CharacterController>();
@@ -60,6 +61,8 @@ public class PlayerCharacter : Character
     }
     private void OnGUI()
     {
+        if (!isOwned) return;
+
         if (Camera.main == null)
         {
             return;

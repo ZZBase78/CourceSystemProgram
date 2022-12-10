@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 8104833309449618543}
   - component: {fileID: 7476337657172122847}
   - component: {fileID: 3427918530673386871}
+  - component: {fileID: 7676920704337141490}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -301,3 +302,22 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &7676920704337141490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880786865395140043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d863b76588ae7b6458f1b1bb421910c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0.1
+  bulletPrefab: {fileID: 0}
+  startAmmunition: 20
+  BulletCount: 
+  health: 100
