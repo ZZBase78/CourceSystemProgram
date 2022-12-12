@@ -472,9 +472,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1900872087916247263, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
+      propertyPath: sceneId
+      value: 3111392799
+      objectReference: {fileID: 0}
+    - target: {fileID: 2496807165245679283, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
+      propertyPath: sceneId
+      value: 102738521
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361696188586799750, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
+      propertyPath: sceneId
+      value: 3969139317
+      objectReference: {fileID: 0}
     - target: {fileID: 6816249461920280497, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
       propertyPath: m_Name
       value: SolarSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6947392590161939490, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
+      propertyPath: sceneId
+      value: 3849471895
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951809132253461366, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
+      propertyPath: sceneId
+      value: 2327553745
+      objectReference: {fileID: 0}
+    - target: {fileID: 8355297462326312822, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
+      propertyPath: sceneId
+      value: 290242290
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051031440048368600, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
+      propertyPath: sceneId
+      value: 694634217
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f7084762ba5ff14085a0ba6c7244808, type: 3}
