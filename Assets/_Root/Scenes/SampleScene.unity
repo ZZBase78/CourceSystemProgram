@@ -312,7 +312,8 @@ GameObject:
   - component: {fileID: 1940959467}
   - component: {fileID: 1940959468}
   - component: {fileID: 1940959470}
-  - component: {fileID: 1940959469}
+  - component: {fileID: 1940959472}
+  - component: {fileID: 1940959471}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -348,20 +349,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spaceShipSettings: {fileID: 11400000, guid: aca307fe3cf6a1a4d935491ad3d04a6b, type: 2}
---- !u!114 &1940959469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1940959466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
 --- !u!114 &1940959470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,16 +368,59 @@ MonoBehaviour:
   sendRate: 30
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 0}
+  transport: {fileID: 1940959472}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 6198037270106577537, guid: 15f46354aefac8346a7555951c2c3903, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
   timeInterpolationGui: 0
   _playerName: 
+--- !u!114 &1940959471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940959466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetX: 0
+  offsetY: 0
+--- !u!114 &1940959472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940959466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Port: 7777
+  DualMode: 1
+  NoDelay: 1
+  Interval: 10
+  Timeout: 10000
+  FastResend: 2
+  CongestionWindow: 0
+  SendWindowSize: 4096
+  ReceiveWindowSize: 4096
+  MaxRetransmit: 40
+  NonAlloc: 1
+  MaximizeSendReceiveBuffersToOSLimit: 1
+  ReliableMaxMessageSize: 298449
+  UnreliableMaxMessageSize: 1199
+  debugLog: 0
+  statisticsGUI: 0
+  statisticsLog: 0
 --- !u!1001 &845782741459530220
 PrefabInstance:
   m_ObjectHideFlags: 0
