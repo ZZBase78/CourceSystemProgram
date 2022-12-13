@@ -17,7 +17,7 @@ namespace Network
 
         public override void OnStartAuthority()
         {
-            Initiate();
+            //Initiate();
         }
         protected virtual void Initiate(UpdatePhase updatePhase =
         UpdatePhase.Update)
@@ -63,7 +63,7 @@ namespace Network
         }
         protected virtual void Movement()
         {
-            if (isOwned)
+            if (isServer)
             {
                 HasAuthorityMovement();
             }

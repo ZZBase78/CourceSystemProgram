@@ -27,6 +27,7 @@ namespace Mechanics
                 _dist = (transform.position - _aroundPoint.position).magnitude;
             }
             Initiate(UpdatePhase.FixedUpdate);
+            //Debug.Log(_dist);
         }
 
         protected override void HasAuthorityMovement()
