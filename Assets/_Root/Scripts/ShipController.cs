@@ -41,7 +41,7 @@ namespace Characters
             _cameraOrbit.Initiate(_cameraAttach == null ? transform :
             _cameraAttach);
             _playerLabel = GetComponentInChildren<PlayerLabel>();
-            base.Initiate();
+            Initiate();
         }
         protected override void HasAuthorityMovement()
         {

@@ -63,7 +63,7 @@ namespace Network
         }
         protected virtual void Movement()
         {
-            if (isServer)
+            if (isServer || isOwned)
             {
                 HasAuthorityMovement();
             }
