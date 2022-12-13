@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: -6947578656213688114}
   - component: {fileID: 2416007239434250029}
   - component: {fileID: 2656494980619953194}
+  - component: {fileID: -1813326449152143417}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -287,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113ef54545b1983418c1097ceb053125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
+  syncDirection: 1
   syncMode: 0
   syncInterval: 0.1
   _cameraAttach: {fileID: 0}
@@ -303,6 +304,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9163383f1402c64da33932893dbbf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &-1813326449152143417
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198037270106577537}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6859791614607986909
 GameObject:
   m_ObjectHideFlags: 0
