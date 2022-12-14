@@ -2,19 +2,20 @@ using Main;
 using Mechanics;
 using Mirror;
 using Network;
+using TMPro;
 using UI;
 using UnityEngine;
 
 namespace Characters
 {
-    public class ShipController : NetworkMovableObject
+    public class ShipController : NetworkBehaviour
     {
         public string PlayerName
         {
             get => _playerName;
             set => _playerName = value;
         }
-        protected override float _speed => _shipSpeed;
+
         [SerializeField] private Transform _cameraAttach;
         private CameraOrbit _cameraOrbit;
         private PlayerLabel _playerLabel;
@@ -23,6 +24,8 @@ namespace Characters
         [SyncVar] private string _playerName;
         private void OnGUI()
         {
+            if (!isOwned) return;
+
             if (_cameraOrbit == null)
             {
                 return;
@@ -41,9 +44,37 @@ namespace Characters
             _cameraOrbit.Initiate(_cameraAttach == null ? transform :
             _cameraAttach);
             _playerLabel = GetComponentInChildren<PlayerLabel>();
-            Initiate();
+            //Initiate();
+            TMP_InputField inputFieldPlayerName = FindObjectOfType<InputFieldPlayerName>().InputField;
+            inputFieldPlayerName.onValueChanged.AddListener(ChangePlayerName);
+            ChangePlayerName(inputFieldPlayerName.text);
         }
-        protected override void HasAuthorityMovement()
+
+        private void ChangePlayerName(string value)
+        {
+            gameObject.name = value;
+            CmdChangePlayerName(value);
+        }
+
+        [Command]
+        private void CmdChangePlayerName(string value)
+        {
+            _playerName = value;
+        }
+
+        private void Update()
+        {
+            if (isOwned)
+            {
+                HasAuthorityMovement();
+            }
+            else
+            {
+                FromServerUpdate();
+            }
+        }
+
+        private void HasAuthorityMovement()
         {
             var spaceShipSettings =
             SettingsContainer.Instance?.SpaceShipSettings;
@@ -74,12 +105,23 @@ namespace Characters
                 targetRotation, Time.deltaTime * speed);
             }
         }
-        protected override void FromServerUpdate() { }
-        protected override void SendToServer() { }
+        private void FromServerUpdate()
+        {
+            //Debug.Log($"{gameObject.name} =  {_playerName}");
+            gameObject.name = _playerName;
+        }
+
+
         [ClientCallback]
         private void LateUpdate()
         {
             _cameraOrbit?.CameraMovement();
+        }
+
+        [ClientCallback]
+        private void OnCollisionEnter(Collision collision)
+        {
+            
         }
     }
 }
