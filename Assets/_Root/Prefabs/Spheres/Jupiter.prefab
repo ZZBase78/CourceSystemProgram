@@ -108,7 +108,6 @@ GameObject:
   - component: {fileID: 2885308201181231085}
   - component: {fileID: -1746249380392112020}
   - component: {fileID: -7822770269956284615}
-  - component: {fileID: -2610201544568309431}
   m_Layer: 0
   m_Name: Jupiter
   m_TagString: Untagged
@@ -170,19 +169,3 @@ MonoBehaviour:
   _offsetSin: 1
   _offsetCos: 1
   _rotationSpeed: 0
---- !u!114 &-2610201544568309431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7245037911503503234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39adc6e09d5544ed955a50ce8600355a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visRange: 30
-  rebuildInterval: 1
-  checkMethod: 0
-  showSlider: 0
