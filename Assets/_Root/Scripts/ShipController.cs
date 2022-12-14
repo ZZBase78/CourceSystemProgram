@@ -22,6 +22,8 @@ namespace Characters
         private float _shipSpeed;
         private Rigidbody _rb;
         [SyncVar] private string _playerName;
+
+        private NetworkTransform _networkTransform;
         private void OnGUI()
         {
             if (!isOwned) return;
@@ -48,6 +50,9 @@ namespace Characters
             TMP_InputField inputFieldPlayerName = FindObjectOfType<InputFieldPlayerName>().InputField;
             inputFieldPlayerName.onValueChanged.AddListener(ChangePlayerName);
             ChangePlayerName(inputFieldPlayerName.text);
+
+            _networkTransform = GetComponent<NetworkTransform>();
+
         }
 
         private void ChangePlayerName(string value)
@@ -118,10 +123,24 @@ namespace Characters
             _cameraOrbit?.CameraMovement();
         }
 
+        private bool IsDangerCollision(Collision collision)
+        {
+            if (collision.collider.name == "Sun") return true;
+
+            if (collision.collider.GetComponentInParent<PlanetOrbit>() != null) return true;
+
+            if (collision.collider.GetComponentInParent<ShipController>() != null) return true;
+
+            return false;
+        }
+
         [ClientCallback]
         private void OnCollisionEnter(Collision collision)
         {
-            
+            if (!IsDangerCollision(collision)) return;
+
+            Transform newPosition = NetworkManager.singleton.GetStartPosition();
+            _networkTransform.CmdTeleport(newPosition.position);
         }
     }
 }
