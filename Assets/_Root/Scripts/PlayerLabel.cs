@@ -15,11 +15,12 @@ namespace UI
             style.normal.background = Texture2D.redTexture;
             style.normal.textColor = Color.blue;
             var objects = NetworkClient.spawned;
+            Debug.Log("objects: " + objects.Count);
             for (int i = 0; i < objects.Count; i++)
             {
                 var obj = objects.ElementAt(i).Value;
                 var position = camera.WorldToScreenPoint(obj.transform.position);
-                var collider = obj.GetComponent<Collider>();
+                var collider = obj.GetComponentInChildren<Collider>();
                 if (collider != null && obj.transform != transform)
                 {
                     GUI.Label(new Rect(new Vector2(position.x, Screen.height -
