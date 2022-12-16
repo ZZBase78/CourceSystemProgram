@@ -61,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Tex2:
-        m_Texture: {fileID: 2800000, guid: a77ea3cb3c8e96c4199c6db0d8b9c638, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -75,7 +75,7 @@ Material:
     - _GlossyReflections: 1
     - _Height: 3.6
     - _Metallic: 0
-    - _MixValue: 0.5
+    - _MixValue: 1
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
