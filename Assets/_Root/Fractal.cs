@@ -7,8 +7,9 @@ public class Fractal : MonoBehaviour
         public Quaternion Rotation;
         public Vector3 WorldPosition;
         public Quaternion WorldRotation;
-public float SpinAngle;
+        public float SpinAngle;
     }
+
     [SerializeField] private Mesh _mesh;
     [SerializeField] private Material _material;
     [SerializeField, Range(1, 8)] private int _depth = 4;
@@ -21,30 +22,32 @@ public float SpinAngle;
     private ComputeBuffer[] _matricesBuffers;
     private static readonly int _matricesId = Shader.PropertyToID("_Matrices");
     private static MaterialPropertyBlock _propertyBlock;
+    
     private static readonly Vector3[] _directions =
     {
-Vector3.up,
-Vector3.left,
-Vector3.right,
-Vector3.forward,
-Vector3.back
-};
+        Vector3.up,
+        Vector3.left,
+        Vector3.right,
+        Vector3.forward,
+        Vector3.back
+    };
+
     private static readonly Quaternion[] _rotations =
     {
-Quaternion.identity,
-Quaternion.Euler(.0f, .0f, 90.0f),
-Quaternion.Euler(.0f, .0f, -90.0f),
-Quaternion.Euler(90.0f, .0f, .0f),
-Quaternion.Euler(-90.0f, .0f, .0f)
-};
+        Quaternion.identity,
+        Quaternion.Euler(.0f, .0f, 90.0f),
+        Quaternion.Euler(.0f, .0f, -90.0f),
+        Quaternion.Euler(90.0f, .0f, .0f),
+        Quaternion.Euler(-90.0f, .0f, .0f)
+    };
+
     private void OnEnable()
     {
         _parts = new FractalPart[_depth][];
         _matrices = new Matrix4x4[_depth][];
         _matricesBuffers = new ComputeBuffer[_depth];
         var stride = 16 * 4;
-        for (int i = 0, length = 1; i < _parts.Length; i++, length *=
-        _childCount)
+        for (int i = 0, length = 1; i < _parts.Length; i++, length *= _childCount)
         {
             _parts[i] = new FractalPart[length];
             _matrices[i] = new Matrix4x4[length];
@@ -54,7 +57,7 @@ Quaternion.Euler(-90.0f, .0f, .0f)
         for (var li = 1; li < _parts.Length; li++)
         {
             var levelParts = _parts[li];
-        for (var fpi = 0; fpi < levelParts.Length; fpi += _childCount)
+            for (var fpi = 0; fpi < levelParts.Length; fpi += _childCount)
             {
                 for (var ci = 0; ci < _childCount; ci++)
                 {
@@ -64,6 +67,7 @@ Quaternion.Euler(-90.0f, .0f, .0f)
         }
         _propertyBlock ??= new MaterialPropertyBlock();
     }
+
     private void OnDisable()
     {
         for (var i = 0; i < _matricesBuffers.Length; i++)
@@ -74,6 +78,7 @@ Quaternion.Euler(-90.0f, .0f, .0f)
         _matrices = null;
         _matricesBuffers = null;
     }
+    
     private void OnValidate()
     {
         if (_parts is null || !enabled)
@@ -88,6 +93,7 @@ Quaternion.Euler(-90.0f, .0f, .0f)
         Direction = _directions[childIndex],
         Rotation = _rotations[childIndex],
     };
+
     private void Update()
     {
         var spinAngelDelta = _speedRotation * Time.deltaTime;
@@ -96,8 +102,7 @@ Quaternion.Euler(-90.0f, .0f, .0f)
         var deltaRotation = Quaternion.Euler(.0f, rootPart.SpinAngle, .0f);
         rootPart.WorldRotation = rootPart.Rotation * deltaRotation;
         _parts[0][0] = rootPart;
-        _matrices[0][0] = Matrix4x4.TRS(rootPart.WorldPosition,
-        rootPart.WorldRotation, Vector3.one);
+        _matrices[0][0] = Matrix4x4.TRS(rootPart.WorldPosition, rootPart.WorldRotation, Vector3.one);
         var scale = 1.0f;
         for (var li = 1; li < _parts.Length; li++)
         {
@@ -105,20 +110,16 @@ Quaternion.Euler(-90.0f, .0f, .0f)
             var parentParts = _parts[li - 1];
             var levelParts = _parts[li];
             var levelMatrices = _matrices[li];
-        for (var fpi = 0; fpi < levelParts.Length; fpi++)
+            for (var fpi = 0; fpi < levelParts.Length; fpi++)
             {
                 var parent = parentParts[fpi / _childCount];
                 var part = levelParts[fpi];
                 part.SpinAngle += spinAngelDelta;
                 deltaRotation = Quaternion.Euler(.0f, part.SpinAngle, .0f);
-                part.WorldRotation = parent.WorldRotation * part.Rotation *
-                deltaRotation;
-                part.WorldPosition = parent.WorldPosition +
-                parent.WorldRotation * (_positionOffset
-                * scale * part.Direction);
+                part.WorldRotation = parent.WorldRotation * part.Rotation * deltaRotation;
+                part.WorldPosition = parent.WorldPosition + parent.WorldRotation * (_positionOffset * scale * part.Direction);
                 levelParts[fpi] = part;
-                levelMatrices[fpi] = Matrix4x4.TRS(part.WorldPosition,
-                part.WorldRotation, scale * Vector3.one);
+                levelMatrices[fpi] = Matrix4x4.TRS(part.WorldPosition, part.WorldRotation, scale * Vector3.one);
             }
         }
         var bounds = new Bounds(rootPart.WorldPosition, 3f * Vector3.one);
@@ -128,8 +129,7 @@ Quaternion.Euler(-90.0f, .0f, .0f)
             buffer.SetData(_matrices[i]);
             _propertyBlock.SetBuffer(_matricesId, buffer);
             _material.SetBuffer(_matricesId, buffer);
-            Graphics.DrawMeshInstancedProcedural(_mesh, 0, _material, bounds,
-            buffer.count, _propertyBlock);
+            Graphics.DrawMeshInstancedProcedural(_mesh, 0, _material, bounds, buffer.count, _propertyBlock);
         }
     }
 }
